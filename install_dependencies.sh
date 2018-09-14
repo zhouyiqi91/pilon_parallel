@@ -1,1 +1,1 @@
-conda env create -f pilon.yml
+conda env create -f pilon.yaml
