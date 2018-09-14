@@ -12,7 +12,7 @@ def write_shell(shell_name,shell_prefix,shell_cont):
 
 def shell_submit(bin_path,cut,cpu,mem,queue,opts,shell_path,shell_name):
 	if not os.path.exists(shell_path+shell_name+".done"):
-		cmd = "python "+bin_path+"sgearray.py -l vf="+mem+",p="+cpu+" -c "+cut+" -q "+queue+" "+opts+" "+shell_path+shell_name+"\n"
+		cmd = "python "+bin_path+"sgearray.py -l vf="+str(mem)+",p="+str(cpu)+" -c "+str(cut)+" -q "+queue+" "+opts+" "+shell_path+shell_name+"\n"
 		logging.info(cmd)
 		ret = subprocess.call(cmd,shell=True)
 		if ret == 0:
@@ -63,7 +63,7 @@ def run_once(out_dir,fastq_dir,fasta,name,run_mode,bwa_cpu,bwa_queue,bwa_opts,bw
 		for index in range(split):
 			split_fa = name+"."+str(index)
 			split_fas.append(split_fa)
-			os.mkdir(split_fa)
+			os.system("mkdir "+split_fa)
 		
 		#create target file
 		shell_name = "create_target.sh"
@@ -100,7 +100,7 @@ def run_once(out_dir,fastq_dir,fasta,name,run_mode,bwa_cpu,bwa_queue,bwa_opts,bw
 		#submit
 	if run_mode in ["all","submit"]:
 		os.chdir(out_dir)
-		os.chdir("bwa")
+		os.chdir("pilon_output")
 		#index
 		cut = 2
 		shell_name = "index.sh"
