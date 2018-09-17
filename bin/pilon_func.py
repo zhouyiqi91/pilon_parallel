@@ -130,6 +130,12 @@ def run_once(out_dir,fastq_dir,fasta,name,run_mode,bwa_cpu,bwa_queue,bwa_opts,bw
 		cut = 1
 		shell_name = "pilon.sh"
 		shell_submit(bin_path,cut,pilon_cpu,pilon_mem,pilon_queue,pilon_opts,"",shell_name)
+
+		#merge
+		if not os.path.exists(name+".fasta"):
+			os.system("cat "+name+".*/"+name+".*.fasta >"+name+".fasta")
+		if not os.path.exists(name+".changes"):
+			os.system("cat "+name+".*/"+name+".*.changes >"+name+".changes")
 		
 
 			
