@@ -4,6 +4,7 @@ import subprocess
 import os
 import logging
 import glob
+import math
 
 def write_shell(shell_name,shell_prefix,shell_cont):
 	with open(shell_name,'w') as shell:
@@ -60,12 +61,10 @@ def run_once(out_dir,fastq_dir,fasta,name,run_mode,bwa_cpu,bwa_queue,bwa_opts,bw
 		shell_cont = "pyfasta split -n "+str(split) + " " +new_fasta +"\n"
 		write_shell(shell_name,shell_prefix,shell_cont)
 		split_fas = []
+		fill_number = int(math.log10(split)) + 1
 		for index in range(split):
-			if split < 100:
-				split_fa = name+"."+str(index)
-			else:
-				logging.error("Split number should <100!")
-				exit()
+			new_index = str(index).zfill(fill_number)
+			split_fa = name+"."+new_index
 			split_fas.append(split_fa)
 			os.system("mkdir "+split_fa)
 		
