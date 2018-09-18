@@ -133,9 +133,9 @@ def run_once(out_dir,fastq_dir,fasta,name,run_mode,bwa_cpu,bwa_queue,bwa_opts,bw
 
 		#merge
 		if not os.path.exists(name+".fasta"):
-			os.system("cat "+name+".*/"+name+".*.fasta >"+name+".fasta")
+			os.system("cat "+name+".*/"+name+".*.fasta >"+name+"_pilon.fasta")
 		if not os.path.exists(name+".changes"):
-			os.system("cat "+name+".*/"+name+".*.changes >"+name+".changes")
+			os.system("cat "+name+".*/"+name+".*.changes >"+name+"_pilon.changes")
 		
 
 			
