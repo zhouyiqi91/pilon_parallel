@@ -61,7 +61,11 @@ def run_once(out_dir,fastq_dir,fasta,name,run_mode,bwa_cpu,bwa_queue,bwa_opts,bw
 		write_shell(shell_name,shell_prefix,shell_cont)
 		split_fas = []
 		for index in range(split):
-			split_fa = name+"."+str(index)
+			if split < 100:
+				split_fa = name+"."+str(index)
+			else:
+				logging.error("Split number should <100!")
+				exit()
 			split_fas.append(split_fa)
 			os.system("mkdir "+split_fa)
 		
