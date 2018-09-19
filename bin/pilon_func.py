@@ -127,7 +127,7 @@ def run_once(out_dir,fastq_dir,fasta,name,run_mode,bwa_cpu,bwa_queue,bwa_opts,bw
 		#split_bam
 		cut = 2
 		shell_name = "split_bam.sh"
-		shell_submit(bin_path,cut,1,2,bwa_queue,bwa_opts,"",shell_name)
+		shell_submit(bin_path,cut,1,"2G",bwa_queue,bwa_opts,"",shell_name)
 
 		#pilon
 		cut = 1
