@@ -95,7 +95,7 @@ def run_once(out_dir,fastq_dir,fasta,name,run_mode,bwa_cpu,bwa_queue,bwa_opts,bw
 		shell_name = "pilon.sh"
 		shell_cont = ""
 		for split_fa in split_fas:
-			shell_cont += "cd "+split_fa + " && pilon -Xmx"+pilon_mem+" --diploid --changes --threads "+pilon_cpu+" --output "+split_fa+"_pilon "+" --genome "+split_fa+".fasta "+frags_line[split_fa] + "--targets `cat " + split_fa +".txt`\n"
+			shell_cont += "cd "+split_fa + " && pilon -Xmx"+pilon_mem+" --diploid --changes --threads "+pilon_cpu+" --output "+split_fa+"_pilon "+" --genome "+split_fa+".fasta "+frags_line[split_fa] + " --targets `cat " + split_fa +".txt`\n"
 		write_shell(shell_name,shell_prefix,shell_cont)
 
 		logging.info("Scripts generated.")
