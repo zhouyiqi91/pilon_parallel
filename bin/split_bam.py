@@ -14,7 +14,9 @@ target_set = set()
 with open(target_file,'r') as target:
 	for line in target:
 		line = line.strip()
-		target_set.add(line)
+		attr = line.split(",")
+		for item in attr:
+			target_set.add(item)
 
 samfile = pysam.AlignmentFile(bam, "rb" )
 pairedreads = pysam.AlignmentFile(temp_bam, "wb", template=samfile)
