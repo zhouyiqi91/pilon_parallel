@@ -46,14 +46,16 @@ def run_once(out_dir,fastq_dir,fasta,name,run_mode,bwa_cpu,bwa_queue,bwa_opts,bw
 			logging.error("No *.fq or *.fq.gz in fastq_dir!")
 			exit()
 #+ glob.glob(fastq_dir+"/*_1*.fastq") + glob.glob(fastq_dir+"/*_1*.fastq.gz")
-		sorted_bams = []
+		#sorted_bams = []
+		bams = []
 		for read1 in read1s:
 			prefix = read1.split("/")[-1].split("_1")[0]
 			read2 = (glob.glob(fastq_dir+"/"+prefix+"_2*.fq")+glob.glob(fastq_dir+"/"+prefix+"_2*.fq.gz"))[0]
 			shell_cont += ("""bwa mem -t """+str(bwa_cpu)+""" """+new_fasta+""" """+read1+""" """+read2+""" |samtools view -Sb - >"""+prefix+""".bam\n""")
 			#shell_cont += ("""samtools sort """+prefix+""".bam """+prefix+"""_sort\n""")
 			#shell_cont += ("""samtools index """+prefix+"""_sort.bam \n""")
-			sorted_bams.append(out_dir+"/pilon_output/"+prefix+"_sort.bam")
+			#sorted_bams.append(out_dir+"/pilon_output/"+prefix+"_sort.bam")
+			bams.append(out_dir+"/pilon_output/"+prefix+".bam")
 		write_shell(shell_name,shell_prefix,shell_cont)
 
 		#split_fa
@@ -81,10 +83,10 @@ def run_once(out_dir,fastq_dir,fasta,name,run_mode,bwa_cpu,bwa_queue,bwa_opts,bw
 		shell_cont = ""
 		for split_fa in split_fas:
 			frags_line[split_fa] = ""
-			for sorted_bam in sorted_bams:
+			for bam in bams:
 				target_file = split_fa + ".txt"
-				shell_cont += "cd " + split_fa + " && python " + bin_path + "split_bam.py " + target_file + " " + sorted_bam +"\n"
-				bam_name= sorted_bam.split("/")[-1]
+				shell_cont += "cd " + split_fa + " && python " + bin_path + "split_bam.py " + target_file + " " + bam +"\n"
+				bam_name= bam.split("/")[-1]
 				new_bam = split_fa + "_" + bam_name
 				frags_line[split_fa] += " --frags " + new_bam
 				shell_cont += "samtools index " + new_bam +"\n"
