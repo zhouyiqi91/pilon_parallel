@@ -51,8 +51,8 @@ def run_once(out_dir,fastq_dir,fasta,name,run_mode,bwa_cpu,bwa_queue,bwa_opts,bw
 			prefix = read1.split("/")[-1].split("_1")[0]
 			read2 = (glob.glob(fastq_dir+"/"+prefix+"_2*.fq")+glob.glob(fastq_dir+"/"+prefix+"_2*.fq.gz"))[0]
 			shell_cont += ("""bwa mem -t """+str(bwa_cpu)+""" """+new_fasta+""" """+read1+""" """+read2+""" |samtools view -Sb - >"""+prefix+""".bam\n""")
-			shell_cont += ("""samtools sort """+prefix+""".bam """+prefix+"""_sort\n""")
-			shell_cont += ("""samtools index """+prefix+"""_sort.bam \n""")
+			#shell_cont += ("""samtools sort """+prefix+""".bam """+prefix+"""_sort\n""")
+			#shell_cont += ("""samtools index """+prefix+"""_sort.bam \n""")
 			sorted_bams.append(out_dir+"/pilon_output/"+prefix+"_sort.bam")
 		write_shell(shell_name,shell_prefix,shell_cont)
 
@@ -110,7 +110,7 @@ def run_once(out_dir,fastq_dir,fasta,name,run_mode,bwa_cpu,bwa_queue,bwa_opts,bw
 		shell_submit(bin_path,cut,1,bwa_mem,bwa_queue,bwa_opts,"",shell_name)
 
 		#align
-		cut = 3
+		cut = 1
 		shell_name = "align.sh"
 		shell_submit(bin_path,cut,bwa_cpu,bwa_mem,bwa_queue,bwa_opts,"",shell_name)
 
