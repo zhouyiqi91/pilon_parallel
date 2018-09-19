@@ -12,7 +12,7 @@ with open(split_fa+".fasta",'r') as split_fa_fasta:
 		line = line.strip()
 		if line[0] == ">":
 			scaf_name = line.lstrip(">")
-			target_file.write(scaf_name+"\n")	
+			target_file.write(scaf_name+",")	
 
 target_file.close()
 os.system("mv "+split_fa+".fasta "+split_fa+"/")
