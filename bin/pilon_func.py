@@ -95,7 +95,7 @@ def run_once(out_dir,fastq_dir,fasta,name,run_mode,bwa_cpu,bwa_queue,bwa_opts,bw
 		shell_name = "pilon.sh"
 		shell_cont = ""
 		for split_fa in split_fas:
-			shell_cont += "cd "+split_fa + " && pilon -Xmx"+pilon_mem+" --diploid --changes --threads "+pilon_cpu+" --output "+split_fa+" --genome "+split_fa+".fasta "+frags_line[split_fa] +"\n"
+			shell_cont += "cd "+split_fa + " && pilon -Xmx"+pilon_mem+" --diploid --changes --threads "+pilon_cpu+" --output "+split_fa+"_pilon "+" --genome "+split_fa+".fasta "+frags_line[split_fa] +"\n"
 		write_shell(shell_name,shell_prefix,shell_cont)
 
 		logging.info("Scripts generated.")
@@ -136,9 +136,9 @@ def run_once(out_dir,fastq_dir,fasta,name,run_mode,bwa_cpu,bwa_queue,bwa_opts,bw
 
 		#merge
 		if not os.path.exists(name+".fasta"):
-			os.system("cat "+name+".*/"+name+".*.fasta >"+name+"_pilon.fasta")
+			os.system("cat "+name+".*/"+name+".*_pilon.fasta >"+name+"_pilon.fasta")
 		if not os.path.exists(name+".changes"):
-			os.system("cat "+name+".*/"+name+".*.changes >"+name+"_pilon.changes")
+			os.system("cat "+name+".*/"+name+".*_pilon.changes >"+name+"_pilon.changes")
 		
 
 			
