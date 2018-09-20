@@ -26,6 +26,7 @@ def shell_submit(bin_path,cut,cpu,mem,queue,opts,shell_path,shell_name):
 		logging.info(shell_path+shell_name+" already finished!")
 
 def run_once(out_dir,fastq_dir,fasta,name,run_mode,bwa_cpu,bwa_queue,bwa_opts,bwa_mem,pilon_cpu,pilon_mem,pilon_queue,pilon_opts,split):
+	new_fasta = out_dir + "/pilon_output/"+name+".fasta"
 	if run_mode in ["all","script"]:
 		#bwa index
 		os.chdir(out_dir)
@@ -35,8 +36,6 @@ def run_once(out_dir,fastq_dir,fasta,name,run_mode,bwa_cpu,bwa_queue,bwa_opts,bw
 		shell_cont = "cp "+fasta+" "+name+".fasta\n"
 		shell_cont += "bwa index " + name + ".fasta\n"
 		write_shell(shell_name,shell_prefix,shell_cont)
-
-		new_fasta = os.getcwd()+"/"+name+".fasta"
 
 		#bwa mem
 		shell_name = "align.sh"
@@ -97,7 +96,7 @@ def run_once(out_dir,fastq_dir,fasta,name,run_mode,bwa_cpu,bwa_queue,bwa_opts,bw
 		shell_name = "pilon.sh"
 		shell_cont = ""
 		for split_fa in split_fas:
-			shell_cont += "cd "+split_fa + " && pilon -Xmx"+pilon_mem+" --diploid --changes --threads "+pilon_cpu+" --output "+split_fa+"_pilon "+" --genome "+split_fa+".fasta "+frags_line[split_fa] + " --targets `cat " + split_fa +".txt`\n"
+			shell_cont += "cd "+split_fa + " && pilon -Xmx"+pilon_mem+" --diploid --changes --threads "+pilon_cpu+" --output "+split_fa+ "_pilon " + " --genome " + new_fasta + " "+frags_line[split_fa] + " --targets `cat " + split_fa +".txt`\n"
 		write_shell(shell_name,shell_prefix,shell_cont)
 
 		logging.info("Scripts generated.")
