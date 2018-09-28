@@ -11,7 +11,7 @@ with open(split_fa+".fasta",'r') as split_fa_fasta:
 	for line in split_fa_fasta:
 		line = line.strip()
 		if line[0] == ">":
-			scaf_name = line.lstrip(">")
+			scaf_name = line.lstrip(">").split(" ")[0]
 			target_file.write(scaf_name+",")	
 
 target_file.close()
