@@ -14,6 +14,7 @@ builtins.bin_path = os.path.abspath(__file__).strip("pilon_run.py")
 
 #shell prefix
 builtins.shell_prefix = "?export PERL5LIB=''\n"
+#source activate pilon\n"
 
 #log
 logging.basicConfig(filename='nohup.out',level = logging.INFO,format = '%(asctime)s - %(name)s - %(levelname)s - %(message)s')
