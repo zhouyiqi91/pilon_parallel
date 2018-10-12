@@ -40,7 +40,6 @@ bwa_opts = bwa["opts"].strip()
 bwa_mem = int(genome_size/1073741824*3)
 if bwa_mem < 5:
 	bwa_mem = 5
-bwa_mem = str(bwa_mem) + "G"
 
 pilon_cpu = pilon["cpu"]
 pilon_mem = pilon["memory"]

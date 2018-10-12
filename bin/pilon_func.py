@@ -26,6 +26,12 @@ def shell_submit(bin_path,cut,cpu,mem,queue,opts,shell_path,shell_name):
 		logging.info(shell_path+shell_name+" already finished!")
 
 def run_once(out_dir,fastq_dir,fasta,name,run_mode,bwa_cpu,bwa_queue,bwa_opts,bwa_mem,pilon_cpu,pilon_mem,pilon_queue,pilon_opts,split):
+	if int(bwa_mem) > 5:
+		work_mem = 5
+	else:
+		work_mem = bwa_mem
+	bwa_mem = str(bwa_mem) + "G"
+	work_mem = str(work_mem) + "G"
 	if run_mode in ["all","script"]:
 		#bwa index
 		os.chdir(out_dir)
@@ -117,17 +123,17 @@ def run_once(out_dir,fastq_dir,fasta,name,run_mode,bwa_cpu,bwa_queue,bwa_opts,bw
 		#split_fa
 		cut = 1
 		shell_name = "split_fa.sh"
-		shell_submit(bin_path,cut,1,bwa_mem,bwa_queue,bwa_opts,"",shell_name)
+		shell_submit(bin_path,cut,1,work_mem,bwa_queue,bwa_opts,"",shell_name)
 
 		#create target file
 		cut = 1
 		shell_name = "create_target.sh"
-		shell_submit(bin_path,cut,1,bwa_mem,bwa_queue,bwa_opts,"",shell_name)
+		shell_submit(bin_path,cut,1,work_mem,bwa_queue,bwa_opts,"",shell_name)
 
 		#split_bam
 		cut = 2
 		shell_name = "split_bam.sh"
-		shell_submit(bin_path,cut,1,bwa_mem,bwa_queue,bwa_opts,"",shell_name)
+		shell_submit(bin_path,cut,1,work_mem,bwa_queue,bwa_opts,"",shell_name)
 
 		#pilon
 		cut = 1
